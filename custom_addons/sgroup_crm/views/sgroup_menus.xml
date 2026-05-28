@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Root Menu -->
+    <menuitem id="menu_sgroup_crm_root"
+              name="Sgroup CRM"
+              sequence="10"
+              web_icon="sgroup_crm,static/description/icon.png"/>
+
+    <!-- Category 1: Quản lý khách hàng -->
+    <menuitem id="menu_sgroup_customer_parent"
+              name="Quản lý khách hàng"
+              parent="menu_sgroup_crm_root"
+              groups="sgroup_crm.group_sgroup_crm_customer"
+              sequence="10"/>
+
+    <menuitem id="menu_sgroup_ad_data"
+              name="Dữ liệu quảng cáo"
+              parent="menu_sgroup_customer_parent"
+              action="action_sgroup_ad_data"
+              sequence="10"/>
+
+    <menuitem id="menu_sgroup_customer"
+              name="Khách hàng"
+              parent="menu_sgroup_customer_parent"
+              action="action_sgroup_customer"
+              sequence="20"/>
+
+    <!-- Category 2: Quản lý nhân viên -->
+    <menuitem id="menu_sgroup_employee"
+              name="Quản lý nhân viên"
+              parent="menu_sgroup_crm_root"
+              action="action_sgroup_employee"
+              groups="sgroup_crm.group_sgroup_crm_employee"
+              sequence="20"/>
+
+    <!-- Category 3: Quản lý dự án -->
+    <menuitem id="menu_sgroup_project"
+              name="Quản lý dự án"
+              parent="menu_sgroup_crm_root"
+              action="action_sgroup_project"
+              groups="sgroup_crm.group_sgroup_crm_project"
+              sequence="25"/>
+
+    <!-- Category 4: Quy tắc tự động -->
+    <menuitem id="menu_sgroup_assignment_parent"
+              name="Quy tắc tự động"
+              parent="menu_sgroup_crm_root"
+              groups="sgroup_crm.group_sgroup_crm_rule"
+              sequence="30"/>
+
+    <menuitem id="menu_sgroup_assignment_rule"
+              name="Quy tắc phân lead"
+              parent="menu_sgroup_assignment_parent"
+              action="action_sgroup_assignment_rule"
+              sequence="10"/>
+
+    <menuitem id="menu_sgroup_assignment_history"
+              name="Nhật ký phân lead"
+              parent="menu_sgroup_assignment_parent"
+              action="action_sgroup_assignment_history"
+              sequence="20"/>
+
+    <!-- Category 5: Quản lý doanh thu -->
+    <menuitem id="menu_sgroup_revenue"
+              name="Quản lý doanh thu"
+              parent="menu_sgroup_crm_root"
+              action="action_sgroup_revenue"
+              groups="sgroup_crm.group_sgroup_crm_revenue"
+              sequence="40"/>
+
+    <!-- Category 6: Báo cáo -->
+    <menuitem id="menu_sgroup_reports"
+              name="Báo cáo"
+              parent="menu_sgroup_crm_root"
+              groups="sgroup_crm.group_sgroup_crm_report"
+              sequence="50"/>
+
+    <!-- Actions for Report sub-menus -->
+    <record id="action_sgroup_customer_report" model="ir.actions.act_window">
+        <field name="name">Phân tích Khách hàng</field>
+        <field name="res_model">sgroup.customer</field>
+        <field name="view_mode">graph,list</field>
+        <field name="context">{'search_default_group_by_level': 1}</field>
+    </record>
+
+    <record id="action_sgroup_revenue_report" model="ir.actions.act_window">
+        <field name="name">Phân tích Doanh thu</field>
+        <field name="res_model">sgroup.revenue</field>
+        <field name="view_mode">graph,pivot,list</field>
+        <field name="context">{'search_default_group_by_project': 1}</field>
+    </record>
+
+    <menuitem id="menu_sgroup_customer_report"
+              name="Phân tích Khách hàng"
+              parent="menu_sgroup_reports"
+              action="action_sgroup_customer_report"
+              sequence="10"/>
+
+    <menuitem id="menu_sgroup_revenue_report"
+              name="Phân tích Doanh thu"
+              parent="menu_sgroup_reports"
+              action="action_sgroup_revenue_report"
+              sequence="20"/>
+</odoo>

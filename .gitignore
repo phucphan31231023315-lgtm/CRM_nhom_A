@@ -1,0 +1,12 @@
+Cấu hình chức năng/
+odoo/
+venv/
+*.log
+ngrok.log
+ngrok_err.log
+odoo.log
+odoo_err.log
+.idea/
+.vscode/
+Thumbs.db
+.DS_Store

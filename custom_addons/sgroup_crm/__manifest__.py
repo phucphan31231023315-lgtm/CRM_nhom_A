@@ -1,0 +1,27 @@
+# -*- coding: utf-8 -*-
+{
+    'name': 'Sgroup CRM',
+    'version': '1.0',
+    'summary': 'Quản lý khách hàng, nhân viên và phân phối lead tự động',
+    'description': 'Phân hệ CRM nội bộ dành cho Sgroup: Quản lý khách hàng, nhân viên sale, dữ liệu quảng cáo và doanh thu.',
+    'category': 'Sales/CRM',
+    'author': 'Antigravity',
+    'website': 'https://sgroup.vn',
+    'depends': ['base', 'web'],
+    'data': [
+        'security/sgroup_crm_security.xml',
+        'security/ir.model.access.csv',
+        'views/sgroup_project_views.xml',
+        'views/sgroup_employee_views.xml',
+        'views/sgroup_customer_views.xml',
+        'views/sgroup_ad_data_views.xml',
+        'views/sgroup_assignment_rule_views.xml',
+        'views/sgroup_assignment_history_views.xml',
+        'views/sgroup_revenue_views.xml',
+        'views/sgroup_menus.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+    'license': 'LGPL-3',
+}

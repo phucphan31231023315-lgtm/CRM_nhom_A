@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_sgroup_assignment_rule_tree" model="ir.ui.view">
+        <field name="name">sgroup.assignment.rule.tree</field>
+        <field name="model">sgroup.assignment.rule</field>
+        <field name="arch" type="xml">
+            <list string="Quy tắc phân chia Lead" decoration-muted="not active">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sgroup_assignment_rule_form" model="ir.ui.view">
+        <field name="name">sgroup.assignment.rule.form</field>
+        <field name="model">sgroup.assignment.rule</field>
+        <field name="arch" type="xml">
+            <form string="Quy tắc phân chia Lead">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Ví dụ: Phân chia Dự án Orchard Collection"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id" options="{'no_create': False}"/>
+                        </group>
+                        <group>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Danh sách Nhân viên &amp; Hạn ngạch" name="rule_lines">
+                            <field name="line_ids">
+                                <list string="Chi tiết phân phối" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="employee_id" options="{'no_create': True}"/>
+                                    <field name="capacity"/>
+                                    <field name="assigned_count" readonly="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_sgroup_assignment_rule" model="ir.actions.act_window">
+        <field name="name">Quy tắc phân chia Lead</field>
+        <field name="res_model">sgroup.assignment.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo quy tắc phân chia lead mới
+            </p>
+            <p>
+                Cấu hình cách Odoo chia lead cho các sale theo Dự án.
+                Cài đặt số lượng lead tối đa (Capacity) của từng sale trong một vòng xoay.
+            </p>
+        </field>
+    </record>
+</odoo>

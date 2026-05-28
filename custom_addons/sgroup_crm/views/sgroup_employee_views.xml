@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_sgroup_employee_tree" model="ir.ui.view">
+        <field name="name">sgroup.employee.tree</field>
+        <field name="model">sgroup.employee</field>
+        <field name="arch" type="xml">
+            <list string="Danh sách Nhân viên" decoration-info="status == 'active'" decoration-muted="status == 'inactive'">
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="team"/>
+                <field name="user_id"/>
+                <field name="status" widget="badge" decoration-success="status == 'active'" decoration-danger="status == 'inactive'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sgroup_employee_form" model="ir.ui.view">
+        <field name="name">sgroup.employee.form</field>
+        <field name="model">sgroup.employee</field>
+        <field name="arch" type="xml">
+            <form string="Nhân viên Sale">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Ví dụ: Nguyễn Văn A"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Thông tin liên hệ">
+                            <field name="phone" widget="phone"/>
+                            <field name="email" widget="email"/>
+                        </group>
+                        <group string="Công tác &amp; Trạng thái">
+                            <field name="team" placeholder="Ví dụ: Sale Team A"/>
+                            <field name="user_id" options="{'no_create': True}"/>
+                            <field name="status"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_sgroup_employee_search" model="ir.ui.view">
+        <field name="name">sgroup.employee.search</field>
+        <field name="model">sgroup.employee</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm Nhân viên">
+                <field name="name" string="Tên nhân viên"/>
+                <field name="phone" string="Số điện thoại"/>
+                <field name="team" string="Team"/>
+                <separator/>
+                <filter string="Đang hoạt động" name="active" domain="[('status', '=', 'active')]"/>
+                <filter string="Tạm ngưng" name="inactive" domain="[('status', '=', 'inactive')]"/>
+                <group name="group_by">
+                    <filter string="Team / Đội nhóm" name="group_by_team" context="{'group_by': 'team'}"/>
+                    <filter string="Trạng thái" name="group_by_status" context="{'group_by': 'status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_sgroup_employee" model="ir.actions.act_window">
+        <field name="name">Nhân viên Sale</field>
+        <field name="res_model">sgroup.employee</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_sgroup_employee_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo nhân viên sale mới
+            </p>
+            <p>
+                Quản lý thông tin, đội nhóm và trạng thái hoạt động của nhân viên sale.
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_sgroup_revenue_tree" model="ir.ui.view">
+        <field name="name">sgroup.revenue.tree</field>
+        <field name="model">sgroup.revenue</field>
+        <field name="arch" type="xml">
+            <list string="Doanh thu">
+                <field name="customer_id"/>
+                <field name="employee_id"/>
+                <field name="project_id"/>
+                <field name="product"/>
+                <field name="status" widget="badge" decoration-info="status == 'booking'" decoration-warning="status == 'deposit'" decoration-primary="status == 'contract'" decoration-success="status == 'paid'" decoration-danger="status == 'cancel'"/>
+                <field name="booking_amount" sum="Tổng booking"/>
+                <field name="deposit_amount" sum="Tổng cọc"/>
+                <field name="recorded_date"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sgroup_revenue_form" model="ir.ui.view">
+        <field name="name">sgroup.revenue.form</field>
+        <field name="model">sgroup.revenue</field>
+        <field name="arch" type="xml">
+            <form string="Giao dịch doanh thu">
+                <sheet>
+                    <group>
+                        <group string="Khách hàng &amp; Phụ trách">
+                            <field name="customer_id" options="{'no_create': True}"/>
+                            <field name="employee_id" options="{'no_create': True}"/>
+                            <field name="recorded_date"/>
+                        </group>
+                        <group string="Chi tiết dự án &amp; Sản phẩm">
+                            <field name="project_id" options="{'no_create': False}"/>
+                            <field name="product" placeholder="Ví dụ: Căn hộ A-1205"/>
+                            <field name="status"/>
+                        </group>
+                    </group>
+                    <group string="Giá trị giao dịch">
+                        <group>
+                            <field name="booking_amount"/>
+                        </group>
+                        <group>
+                            <field name="deposit_amount"/>
+                        </group>
+                    </group>
+                    <group string="Ghi chú">
+                        <field name="notes" nolabel="1" placeholder="Nhập ghi chú chi tiết về giao dịch này..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Graph View -->
+    <record id="view_sgroup_revenue_graph" model="ir.ui.view">
+        <field name="name">sgroup.revenue.graph</field>
+        <field name="model">sgroup.revenue</field>
+        <field name="arch" type="xml">
+            <graph string="Báo cáo biểu đồ doanh thu" type="bar" sample="1">
+                <field name="project_id"/>
+                <field name="deposit_amount" type="measure"/>
+                <field name="booking_amount" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Pivot View -->
+    <record id="view_sgroup_revenue_pivot" model="ir.ui.view">
+        <field name="name">sgroup.revenue.pivot</field>
+        <field name="model">sgroup.revenue</field>
+        <field name="arch" type="xml">
+            <pivot string="Bảng phân tích doanh thu" sample="1">
+                <field name="project_id" type="row"/>
+                <field name="employee_id" type="row"/>
+                <field name="status" type="col"/>
+                <field name="booking_amount" type="measure"/>
+                <field name="deposit_amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_sgroup_revenue_search" model="ir.ui.view">
+        <field name="name">sgroup.revenue.search</field>
+        <field name="model">sgroup.revenue</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm Doanh thu">
+                <field name="customer_id"/>
+                <field name="employee_id"/>
+                <field name="project_id"/>
+                <field name="product"/>
+                <separator/>
+                <filter string="Booking" name="status_booking" domain="[('status', '=', 'booking')]"/>
+                <filter string="Đặt cọc" name="status_deposit" domain="[('status', '=', 'deposit')]"/>
+                <filter string="Ký HĐMB" name="status_contract" domain="[('status', '=', 'contract')]"/>
+                <filter string="Đã thanh toán" name="status_paid" domain="[('status', '=', 'paid')]"/>
+                <filter string="Đã hủy" name="status_cancel" domain="[('status', '=', 'cancel')]"/>
+                <group name="group_by">
+                    <filter string="Dự án" name="group_by_project" context="{'group_by': 'project_id'}"/>
+                    <filter string="Nhân viên sale" name="group_by_employee" context="{'group_by': 'employee_id'}"/>
+                    <filter string="Trạng thái giao dịch" name="group_by_status" context="{'group_by': 'status'}"/>
+                    <filter string="Ngày ghi nhận" name="group_by_date" context="{'group_by': 'recorded_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_sgroup_revenue" model="ir.actions.act_window">
+        <field name="name">Báo cáo Doanh thu</field>
+        <field name="res_model">sgroup.revenue</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+        <field name="search_view_id" ref="view_sgroup_revenue_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Ghi nhận giao dịch doanh thu đầu tiên
+            </p>
+            <p>
+                Quản lý doanh số, cọc, booking từ các giao dịch bất động sản của sale.
+                Xem biểu đồ tròn/cột phân tích đa chiều và xuất bảng phân tích động.
+            </p>
+        </field>
+    </record>
+</odoo>

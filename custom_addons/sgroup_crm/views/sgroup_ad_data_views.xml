@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_sgroup_ad_data_tree" model="ir.ui.view">
+        <field name="name">sgroup.ad.data.tree</field>
+        <field name="model">sgroup.ad.data</field>
+        <field name="arch" type="xml">
+            <list string="Dữ liệu quảng cáo / Leads" decoration-danger="state in ('auth_error', 'no_rule')" decoration-warning="state == 'duplicate_phone'" decoration-success="state == 'synced'">
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="project_id"/>
+                <field name="source"/>
+                <field name="campaign"/>
+                <field name="lead_time"/>
+                <field name="employee_id"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'synced'" decoration-warning="state == 'duplicate_phone'" decoration-danger="state in ('auth_error', 'no_rule')"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sgroup_ad_data_form" model="ir.ui.view">
+        <field name="name">sgroup.ad.data.form</field>
+        <field name="model">sgroup.ad.data</field>
+        <field name="arch" type="xml">
+            <form string="Dữ liệu quảng cáo / Lead">
+                <header>
+                    <button name="action_auto_assign" string="Phân chia lead" type="object" class="oe_highlight" invisible="state in ('synced', 'duplicate_phone')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,synced,duplicate_phone,no_rule"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Ví dụ: Nguyễn Văn Lead"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Thông tin khách hàng">
+                            <field name="phone" widget="phone"/>
+                            <field name="email" widget="email"/>
+                            <field name="project_id" options="{'no_create': False}"/>
+                        </group>
+                        <group string="Thông tin Marketing &amp; Phân công">
+                            <field name="source" placeholder="Ví dụ: Facebook"/>
+                            <field name="campaign" placeholder="Ví dụ: Campaign_Orchard_May2026"/>
+                            <field name="lead_time"/>
+                            <field name="employee_id" readonly="1"/>
+                            <field name="sync_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lịch sử phân phối" name="assignment_history">
+                            <field name="history_ids" readonly="1">
+                                <list string="Lịch sử phân phối" decoration-danger="state == 'error'" decoration-success="state == 'success'">
+                                    <field name="assignment_time"/>
+                                    <field name="employee_id"/>
+                                    <field name="state" widget="badge" decoration-success="state == 'success'" decoration-danger="state == 'error'"/>
+                                    <field name="notes"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_sgroup_ad_data_search" model="ir.ui.view">
+        <field name="name">sgroup.ad.data.search</field>
+        <field name="model">sgroup.ad.data</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm Dữ liệu quảng cáo">
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="project_id"/>
+                <field name="source"/>
+                <separator/>
+                <filter string="Mới" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Đã đồng bộ" name="synced" domain="[('state', '=', 'synced')]"/>
+                <filter string="Trùng số điện thoại" name="duplicate_phone" domain="[('state', '=', 'duplicate_phone')]"/>
+                <filter string="Chưa thiết lập quy tắc" name="no_rule" domain="[('state', '=', 'no_rule')]"/>
+                <filter string="Lỗi xác thực" name="auth_error" domain="[('state', '=', 'auth_error')]"/>
+                <group name="group_by">
+                    <filter string="Dự án quan tâm" name="group_by_project" context="{'group_by': 'project_id'}"/>
+                    <filter string="Nhân viên nhận lead" name="group_by_employee" context="{'group_by': 'employee_id'}"/>
+                    <filter string="Nguồn Lead" name="group_by_source" context="{'group_by': 'source'}"/>
+                    <filter string="Trạng thái" name="group_by_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_sgroup_ad_data" model="ir.actions.act_window">
+        <field name="name">Dữ liệu quảng cáo (Leads)</field>
+        <field name="res_model">sgroup.ad.data</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_sgroup_ad_data_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Đồng bộ hoặc tạo lead quảng cáo mới
+            </p>
+            <p>
+                Dữ liệu từ Google Form/Sheet sẽ về đây. Odoo sẽ tự động chạy quy tắc phân chia để gắn sale phụ trách.
+            </p>
+        </field>
+    </record>
+</odoo>

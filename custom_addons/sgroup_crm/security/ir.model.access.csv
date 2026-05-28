@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sgroup_employee,sgroup.employee,model_sgroup_employee,sgroup_crm.group_sgroup_crm_employee,1,1,1,1
+access_sgroup_customer,sgroup.customer,model_sgroup_customer,sgroup_crm.group_sgroup_crm_customer,1,1,1,1
+access_sgroup_ad_data,sgroup.ad.data,model_sgroup_ad_data,sgroup_crm.group_sgroup_crm_customer,1,1,1,1
+access_sgroup_assignment_rule,sgroup.assignment.rule,model_sgroup_assignment_rule,sgroup_crm.group_sgroup_crm_rule,1,1,1,1
+access_sgroup_assignment_rule_line,sgroup.assignment.rule.line,model_sgroup_assignment_rule_line,sgroup_crm.group_sgroup_crm_rule,1,1,1,1
+access_sgroup_assignment_history,sgroup.assignment.history,model_sgroup_assignment_history,sgroup_crm.group_sgroup_crm_rule,1,1,1,1
+access_sgroup_revenue,sgroup.revenue,model_sgroup_revenue,sgroup_crm.group_sgroup_crm_revenue,1,1,1,1
+access_sgroup_project,sgroup.project,model_sgroup_project,sgroup_crm.group_sgroup_crm_project,1,1,1,1
